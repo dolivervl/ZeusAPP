@@ -5,12 +5,7 @@ from _mysql import connect, connection, Error
 
 
 
-# CONFIG
-DBUSER="hercules"
-DBPWD="Poseidon01"
-DBNAME="ZEUS"
-DBHOST="zeus.cdtvxdjfmpg3.us-east-1.rds.amazonaws.com"
-ARQUIVO="NEXTEL_SVA_ALES_ATIVAR_20180227_000000.TXT"
+
 
 def insert_assinantes(assinantes):
     #query = 'INSERT INTO diego(msisdn, cpf, nome, codigoplano, categoria, dataativacao, tipopacotesva) ' \

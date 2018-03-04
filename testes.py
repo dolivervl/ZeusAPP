@@ -3,12 +3,6 @@
 import mysql.connector
 import fileinput
 
-# CONFIG
-DBUSER="hercules"
-DBPWD="Poseidon01"
-DBNAME="ZEUS"
-DBHOST="zeus.cdtvxdjfmpg3.us-east-1.rds.amazonaws.com"
-ARQUIVO="NEXTEL_SVA_ALES_ATIVAR_20180227_000000.TXT"
 
 def grava_banco(QUERY):
     cnx = mysql.connector.connect(user=DBUSER, password=DBPWD, host=DBHOST, database=DBNAME)
