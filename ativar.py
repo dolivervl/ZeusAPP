@@ -1,49 +1,35 @@
 # -*- coding: utf-8 -*-
-from numpy import loadtxt, genfromtxt
-
-from _mysql import connect, connection, Error
+import MySQLdb as mysql
 
 
 
 
-
-def insert_assinantes(assinantes):
-    #query = 'INSERT INTO diego(msisdn, cpf, nome, codigoplano, categoria, dataativacao, tipopacotesva) ' \
-    #        'VALUES(%s,%s,%s,%s,%s,%s,%s)'
-    query = 'SELECT * FROM diego;'
-
-
-    try:
-        conn = connect(user=DBUSER, password=DBPWD, host=DBHOST, database=DBNAME)
-
-        cursor = conn.cursor()
-        cursor.executemany(query)
-
-        conn.commit()
-    except Error as e:
-        print('Error:', e)
-
-    finally:
-        cursor.close()
-        conn.close()
-
-
-def main(ARQUIVO):
-    with open(ARQUIVO) as f:
-        #content = f.read()
-        content = ARQUIVO
+def dados():
+    global line
+    with open(file) as f:
         next(f)
-        for content in f:
-            content = f.read()
-            print(content)
-    #    #print("Open %s" % content)
-    #    assinantes = content
-        #assinantes = content.insert(0, "(")
-            #assinantes+=str("(%s)" % content)
-    #print(assinantes)
-            #assinantes = [('5511947222332', '35209905802', 'ALINE FERREIRA DA SILVA', '2211', 'POS', '27/02/2018', 'Pacote serviÃ§os promocional 5 3G\n')]
-    insert_assinantes(content)
+        x = 0
+        for line in f:
+            line = f.readline().replace(';', '","').replace('3G', '"')
+            #print('contador {} linha {}'.format(x, line))
+            #print('Inicio')
+            #print('insert into "%s" ' %line)
+            #print('Fim')
+            conn(line)
+            x += 1
+    return line
+
+def conn(line):
+    cnx = mysql.connect(user=DBUSER, passwd=DBPWD, host=DBHOST, db=DBNAME)
+    cursor = cnx.cursor()
+    query = 'insert into diego (msisdn, cpf, nome, codigoplano, categoria, dataativacao, tipopacotesva) values ("{});'.format(line)
+    #print('"%s' %line)
+    #cursor.execute(query)
+    #cnx.send_query(query)
+    print('Ok')
+    cnx.commit()
+    cursor.close()
+    cnx.close()
 
 
-if __name__ == '__main__':
-    main(ARQUIVO)
+dados()
